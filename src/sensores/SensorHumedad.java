@@ -17,13 +17,14 @@ public class SensorHumedad extends Sensor {
 
     @Override
     public int generarLectura() {
-        // TODO: implementar
-        return 0;
+        // Genera de -10 a 110, para que a veces salga fuera de rango [0, 100]
+        int valor = RND.nextInt(MAX - MIN + 21) + (MIN - 10);
+        registrarLectura(valor);
+        return valor;
     }
 
     @Override
     public boolean fueraDeRango(int valor) {
-        // TODO: implementar
-        return false;
+        return valor < MIN || valor > MAX;
     }
 }

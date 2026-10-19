@@ -17,13 +17,14 @@ public class SensorLuminosidad extends Sensor {
 
     @Override
     public int generarLectura() {
-        // TODO: implementar
-        return 0;
+        // Genera de -200 a 2200, para que a veces salga fuera de rango [0, 2000]
+        int valor = RND.nextInt(MAX - MIN + 401) + (MIN - 200);
+        registrarLectura(valor);
+        return valor;
     }
 
     @Override
     public boolean fueraDeRango(int valor) {
-        // TODO: implementar
-        return false;
+        return valor < MIN || valor > MAX;
     }
 }
