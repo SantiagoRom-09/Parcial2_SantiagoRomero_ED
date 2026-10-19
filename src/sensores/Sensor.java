@@ -31,17 +31,35 @@ public abstract class Sensor {
      * Registra un valor en el buffer circular de tamaño fijo.
      * Si el buffer está lleno, sobrescribe la lectura más antigua.
      */
+
     public void registrarLectura(int valor) {
-        // TODO: implementar buffer circular
-        // Pista: usar indiceActual y cantidadLecturas.
+        // Si ya está lleno, corro todo una posición a la izquierda
+        if (cantidadLecturas == ultimasLecturas.length) {
+            for (int i = 0; i < ultimasLecturas.length - 1; i++) {
+                ultimasLecturas[i] = ultimasLecturas[i + 1];
+            }
+            ultimasLecturas[ultimasLecturas.length - 1] = valor;
+        } else {
+            ultimasLecturas[cantidadLecturas] = valor;
+            cantidadLecturas++;
+        }
     }
 
     /**
      * Promedio de las lecturas registradas. Si no hay, retorna 0.
      */
+    /**
+     * Promedio de las lecturas registradas. Si no hay, retorna 0.
+     */
     public double promedioUltimasLecturas() {
-        // TODO: implementar
-        return 0;
+        if (cantidadLecturas == 0) {
+            return 0;
+        }
+        int suma = 0;
+        for (int i = 0; i < cantidadLecturas; i++) {
+            suma += ultimasLecturas[i];
+        }
+        return (double) suma / cantidadLecturas;
     }
 
     /**
