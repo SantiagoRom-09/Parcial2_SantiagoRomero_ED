@@ -24,8 +24,25 @@ public class NodoIoT {
      * Retorna el sensor creado, o null si el tipo es inválido.
      */
     public Sensor agregarSensor(String tipo, String idSensor, int capacidad) {
-        // TODO: implementar (polimorfismo + composición)
-        return null;
+        if (tipo == null) {
+            return null;
+        }
+        Sensor sensor;
+        switch (tipo.toUpperCase()) {
+            case "TEMPERATURA":
+                sensor = new SensorTemperatura(idSensor, capacidad);
+                break;
+            case "HUMEDAD":
+                sensor = new SensorHumedad(idSensor, capacidad);
+                break;
+            case "LUMINOSIDAD":
+                sensor = new SensorLuminosidad(idSensor, capacidad);
+                break;
+            default:
+                return null;   // tipo inválido
+        }
+        sensores.add(sensor);
+        return sensor;
     }
 
     /**
@@ -33,16 +50,36 @@ public class NodoIoT {
      * Pista: usar instanceof para filtrar.
      */
     public double promedioTemperatura() {
-        // TODO: implementar
-        return 0;
+        double suma = 0;
+        int contador = 0;
+        for (Sensor s : sensores) {
+            if (s instanceof SensorTemperatura && s.getCantidadLecturas() > 0) {
+                suma += s.promedioUltimasLecturas();
+                contador++;
+            }
+        }
+        if (contador == 0) {
+            return 0;
+        }
+        return suma / contador;
     }
 
     /**
      * Lista de sensores cuya última lectura está fuera de rango.
      */
     public List<Sensor> sensoresFueraDeRango() {
-        // TODO: implementar
-        return new ArrayList<>();
+        List<Sensor> resultado = new ArrayList<>();
+        for (Sensor s : sensores) {
+            if (s.getCantidadLecturas() > 0) {
+                int[] buffer = s.getUltimasLecturas();
+                int pos = (s.getIndiceActual() - 1 + buffer.length) % buffer.length;
+                int ultima = buffer[pos];
+                if (s.fueraDeRango(ultima)) {
+                    resultado.add(s);
+                }
+            }
+        }
+        return resultado;
     }
 
     public String getId() { return id; }
