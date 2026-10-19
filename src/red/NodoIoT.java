@@ -74,6 +74,7 @@ public class NodoIoT {
                 int[] buffer = s.getUltimasLecturas();
                 int pos = (s.getIndiceActual() - 1 + buffer.length) % buffer.length;
                 int ultima = buffer[pos];
+
                 if (s.fueraDeRango(ultima)) {
                     resultado.add(s);
                 }
