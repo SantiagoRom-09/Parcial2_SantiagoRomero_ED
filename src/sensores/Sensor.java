@@ -69,10 +69,34 @@ public abstract class Sensor {
     public abstract boolean fueraDeRango(int valor);
 
     // Getters encapsulados
-    public String getId() { return id; }
-    public String getUnidad() { return unidad; }
-    public int[] getUltimasLecturas() { return ultimasLecturas; }
-    public int getCantidadLecturas() { return cantidadLecturas; }
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getUnidad() {
+        return unidad;
+    }
+
+    public void setUnidad(String unidad) {
+        this.unidad = unidad;
+    }
+
+    public int[] getUltimasLecturas() {
+        return ultimasLecturas;
+    }
+
+    public void setUltimasLecturas(int[] ultimasLecturas) {
+        this.ultimasLecturas = ultimasLecturas;
+    }
+
+    public int getCantidadLecturas() {
+        return cantidadLecturas;
+    }
+
     public int getIndiceActual() { return indiceActual; }
 
     protected void setIndiceActual(int indiceActual) { this.indiceActual = indiceActual; }
