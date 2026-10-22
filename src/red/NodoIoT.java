@@ -72,10 +72,11 @@ public class NodoIoT {
         for (Sensor s : sensores) {
             if (s.getCantidadLecturas() > 0) {
                 int[] buffer = s.getUltimasLecturas();
-                int pos = (s.getIndiceActual() - 1 + buffer.length) % buffer.length;
-                int ultima = buffer[pos];
 
-                if (s.fueraDeRango(ultima)) {
+                // La lectura más reciente siempre está en la posición (cantidad - 1)
+                int ultimaLectura = buffer[s.getCantidadLecturas() - 1];
+
+                if (s.fueraDeRango(ultimaLectura)) {
                     resultado.add(s);
                 }
             }
